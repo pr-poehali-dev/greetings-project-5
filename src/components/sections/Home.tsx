@@ -1,0 +1,96 @@
+import Icon from '@/components/ui/icon';
+
+const news = [
+  {
+    date: 'Сегодня',
+    title: 'Новый интенсив по разговорному английскому',
+    text: 'Группа стартует 5 числа. Осталось 3 места — успейте записаться на странице «Услуги».',
+    tag: 'Анонс',
+  },
+  {
+    date: 'Вчера',
+    title: 'Запись урока «Времена в китайском» доступна',
+    text: 'Ученики курса HSK 2 могут пересмотреть разбор в личном кабинете.',
+    tag: 'Материалы',
+  },
+  {
+    date: '3 дня назад',
+    title: 'Анна вернулась из Шанхая',
+    text: 'Привезла свежие материалы по живой разговорной речи и новые темы для занятий.',
+    tag: 'Новость',
+  },
+];
+
+const schedule = [
+  { day: 'Пн', date: '30', time: '10:00', subject: 'Английский · Разговорный', free: false },
+  { day: 'Вт', date: '01', time: '14:00', subject: 'Китайский · HSK 2', free: false },
+  { day: 'Ср', date: '02', time: '12:00', subject: 'Свободно для записи', free: true },
+  { day: 'Чт', date: '03', time: '18:00', subject: 'Английский · Бизнес', free: false },
+  { day: 'Пт', date: '04', time: '11:00', subject: 'Свободно для записи', free: true },
+];
+
+const Home = () => {
+  return (
+    <div className="animate-fade-in pb-4">
+      <div className="bg-primary text-primary-foreground rounded-3xl p-7 mb-6 relative overflow-hidden">
+        <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-accent/20" />
+        <p className="text-sm opacity-70 mb-1">Добро пожаловать обратно</p>
+        <h2 className="font-display text-3xl font-bold leading-tight">
+          Ваш путь к свободному языку
+        </h2>
+        <p className="opacity-80 mt-2 text-sm">
+          Следите за новостями и не пропускайте важные обновления.
+        </p>
+      </div>
+
+      <div className="mb-7">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="font-display text-2xl font-bold text-foreground">Расписание уроков</h3>
+          <Icon name="CalendarDays" size={20} className="text-accent" />
+        </div>
+        <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
+          {schedule.map((s, i) => (
+            <div
+              key={i}
+              className={`min-w-[140px] rounded-2xl p-4 border hover-lift ${
+                s.free
+                  ? 'border-dashed border-accent/50 bg-accent/5'
+                  : 'border-border bg-card'
+              }`}
+            >
+              <div className="flex items-baseline gap-2">
+                <span className="font-display text-2xl font-bold text-foreground">{s.date}</span>
+                <span className="text-xs text-muted-foreground uppercase">{s.day}</span>
+              </div>
+              <p className="text-accent font-semibold text-sm mt-2">{s.time}</p>
+              <p className="text-xs text-muted-foreground mt-1 leading-snug">{s.subject}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="font-display text-2xl font-bold text-foreground mb-3">Новости</h3>
+        <div className="space-y-3">
+          {news.map((n, i) => (
+            <article
+              key={i}
+              className="bg-card border border-border rounded-2xl p-5 hover-lift"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-semibold text-accent uppercase tracking-wide">
+                  {n.tag}
+                </span>
+                <span className="text-xs text-muted-foreground">{n.date}</span>
+              </div>
+              <h4 className="font-semibold text-foreground text-lg leading-snug">{n.title}</h4>
+              <p className="text-muted-foreground text-sm mt-1 leading-relaxed">{n.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Home;
