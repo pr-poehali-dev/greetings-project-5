@@ -62,7 +62,7 @@ const Index = () => {
   if (!user) return <Auth onAuth={handleAuth} />;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen mesh-bg">
       <main className="max-w-2xl mx-auto px-5 pt-8 pb-28">
         {tab === 'home' && <Home />}
         {tab === 'services' && <Services />}
@@ -80,25 +80,27 @@ const Index = () => {
 
       <nav className="fixed bottom-0 left-0 right-0 z-50">
         <div className="max-w-2xl mx-auto px-4 pb-4">
-          <div className="bg-card/90 backdrop-blur-lg border border-border rounded-2xl shadow-xl flex items-center justify-around p-2">
+          <div className="glass rounded-2xl soft-shadow flex items-center justify-around p-2">
             {tabs.map((t) => {
               const active = tab === t.id;
               return (
                 <button
                   key={t.id}
                   onClick={() => setTab(t.id)}
-                  className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-colors ${
-                    active ? 'text-accent' : 'text-muted-foreground hover:text-foreground'
+                  className={`relative flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all duration-300 ${
+                    active
+                      ? 'text-accent-foreground bg-accent shadow-lg'
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <div
-                    className={`flex items-center justify-center transition-all ${
-                      active ? 'scale-110' : ''
+                    className={`flex items-center justify-center transition-all duration-300 ${
+                      active ? 'scale-110 -translate-y-0.5' : ''
                     }`}
                   >
                     <Icon name={t.icon} size={22} fallback="Circle" />
                   </div>
-                  <span className="text-[11px] font-medium">{t.label}</span>
+                  <span className="text-[11px] font-semibold">{t.label}</span>
                 </button>
               );
             })}

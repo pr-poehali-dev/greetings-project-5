@@ -97,14 +97,17 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "Golos Text", sans-serif;
+    font-family: "Manrope", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.011em;
   }
 
   h1,
   h2,
   h3,
   .font-display {
-    font-family: "Cormorant", serif;
+    font-family: "Unbounded", sans-serif;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -135,10 +138,88 @@
   }
   .hover-lift {
     transition:
-      transform 0.25s ease,
-      box-shadow 0.25s ease;
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.3s ease;
   }
   .hover-lift:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px -18px hsl(var(--primary) / 0.25);
+  }
+
+  .glass {
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid hsl(var(--border) / 0.6);
+  }
+
+  .soft-shadow {
+    box-shadow:
+      0 1px 2px hsl(var(--primary) / 0.04),
+      0 8px 24px -12px hsl(var(--primary) / 0.12);
+  }
+
+  .text-gradient {
+    background: linear-gradient(
+      120deg,
+      hsl(var(--foreground)),
+      hsl(var(--accent))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .mesh-bg {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(
+        at 12% 18%,
+        hsl(var(--accent) / 0.12) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 88% 8%,
+        hsl(var(--primary) / 0.1) 0px,
+        transparent 45%
+      ),
+      radial-gradient(
+        at 75% 92%,
+        hsl(var(--accent) / 0.08) 0px,
+        transparent 50%
+      );
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  .stagger > * {
+    opacity: 0;
+    animation: slide-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .stagger > *:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+  .stagger > *:nth-child(2) {
+    animation-delay: 0.12s;
+  }
+  .stagger > *:nth-child(3) {
+    animation-delay: 0.19s;
+  }
+  .stagger > *:nth-child(4) {
+    animation-delay: 0.26s;
+  }
+  .stagger > *:nth-child(5) {
+    animation-delay: 0.33s;
   }
 }

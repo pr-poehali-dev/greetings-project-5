@@ -32,13 +32,14 @@ const schedule = [
 const Home = () => {
   return (
     <div className="animate-fade-in pb-4">
-      <div className="bg-primary text-primary-foreground rounded-3xl p-7 mb-6 relative overflow-hidden">
-        <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-accent/20" />
-        <p className="text-sm opacity-70 mb-1">Добро пожаловать обратно</p>
-        <h2 className="font-display text-3xl font-bold leading-tight">
+      <div className="bg-gradient-to-br from-primary via-primary to-accent/80 text-primary-foreground rounded-[1.75rem] p-7 mb-7 relative overflow-hidden soft-shadow">
+        <div className="absolute -right-10 -top-10 w-44 h-44 rounded-full bg-white/10 blur-xl" />
+        <div className="absolute -left-6 -bottom-12 w-32 h-32 rounded-full bg-accent/30 blur-2xl" />
+        <p className="text-xs uppercase tracking-widest opacity-70 mb-2">Добро пожаловать обратно</p>
+        <h2 className="font-display text-2xl md:text-3xl font-bold leading-tight relative">
           Ваш путь к свободному языку
         </h2>
-        <p className="opacity-80 mt-2 text-sm">
+        <p className="opacity-80 mt-3 text-sm relative">
           Следите за новостями и не пропускайте важные обновления.
         </p>
       </div>
@@ -48,14 +49,14 @@ const Home = () => {
           <h3 className="font-display text-2xl font-bold text-foreground">Расписание уроков</h3>
           <Icon name="CalendarDays" size={20} className="text-accent" />
         </div>
-        <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
+        <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 stagger">
           {schedule.map((s, i) => (
             <div
               key={i}
               className={`min-w-[140px] rounded-2xl p-4 border hover-lift ${
                 s.free
                   ? 'border-dashed border-accent/50 bg-accent/5'
-                  : 'border-border bg-card'
+                  : 'border-border bg-card/70 backdrop-blur-sm'
               }`}
             >
               <div className="flex items-baseline gap-2">
@@ -71,19 +72,19 @@ const Home = () => {
 
       <div>
         <h3 className="font-display text-2xl font-bold text-foreground mb-3">Новости</h3>
-        <div className="space-y-3">
+        <div className="space-y-3 stagger">
           {news.map((n, i) => (
             <article
               key={i}
-              className="bg-card border border-border rounded-2xl p-5 hover-lift"
+              className="bg-card/70 backdrop-blur-sm border border-border rounded-2xl p-5 hover-lift"
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-accent uppercase tracking-wide">
+                <span className="text-xs font-bold text-accent uppercase tracking-wide bg-accent/10 px-2 py-0.5 rounded-full">
                   {n.tag}
                 </span>
                 <span className="text-xs text-muted-foreground">{n.date}</span>
               </div>
-              <h4 className="font-semibold text-foreground text-lg leading-snug">{n.title}</h4>
+              <h4 className="font-bold text-foreground text-lg leading-snug">{n.title}</h4>
               <p className="text-muted-foreground text-sm mt-1 leading-relaxed">{n.text}</p>
             </article>
           ))}

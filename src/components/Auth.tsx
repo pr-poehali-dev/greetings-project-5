@@ -34,13 +34,13 @@ const Auth = ({ onAuth }: AuthProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-5 py-10">
+    <div className="min-h-screen mesh-bg flex items-center justify-center px-5 py-10">
       <div className="w-full max-w-md animate-slide-up">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-5">
-            <Icon name="GraduationCap" size={28} className="text-accent" />
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-accent/60 flex items-center justify-center mx-auto mb-5 soft-shadow animate-float">
+            <Icon name="GraduationCap" size={30} className="text-accent-foreground" />
           </div>
-          <h1 className="font-display text-4xl font-bold text-foreground">
+          <h1 className="font-display text-3xl font-bold text-gradient">
             Добро пожаловать
           </h1>
           <p className="text-muted-foreground mt-2">
@@ -48,7 +48,7 @@ const Auth = ({ onAuth }: AuthProps) => {
           </p>
         </div>
 
-        <div className="bg-card rounded-2xl border border-border p-6 shadow-xl">
+        <div className="glass rounded-3xl p-6 soft-shadow">
           <div className="space-y-3">
             {providers.map((p) => (
               <button

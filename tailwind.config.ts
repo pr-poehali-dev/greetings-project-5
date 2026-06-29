@@ -19,8 +19,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				display: ['Cormorant', 'serif'],
-				sans: ['Golos Text', 'sans-serif'],
+				display: ['Unbounded', 'sans-serif'],
+				sans: ['Manrope', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

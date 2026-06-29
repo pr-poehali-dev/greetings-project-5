@@ -67,18 +67,18 @@ const Services = () => {
         Выберите формат занятий и оплатите в пару нажатий
       </p>
 
-      <div className="space-y-4">
+      <div className="space-y-4 stagger">
         {plans.map((plan) => (
           <div
             key={plan.id}
-            className={`relative rounded-2xl p-6 border hover-lift ${
+            className={`relative rounded-[1.5rem] p-6 border hover-lift ${
               plan.popular
-                ? 'border-accent bg-accent/5 shadow-lg'
-                : 'border-border bg-card'
+                ? 'border-accent/60 bg-gradient-to-br from-accent/10 to-transparent soft-shadow'
+                : 'border-border bg-card/70 backdrop-blur-sm'
             }`}
           >
             {plan.popular && (
-              <span className="absolute -top-3 left-6 bg-accent text-accent-foreground text-xs font-semibold px-3 py-1 rounded-full">
+              <span className="absolute -top-3 left-6 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                 Популярный выбор
               </span>
             )}
