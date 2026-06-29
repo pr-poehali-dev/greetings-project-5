@@ -1,91 +1,123 @@
 import Icon from '@/components/ui/icon';
+import EditableText from '@/components/EditableText';
+import type { SiteContent } from '@/lib/content';
 
-const news = [
-  {
-    date: 'Сегодня',
-    title: 'Новый интенсив по разговорному английскому',
-    text: 'Группа стартует 5 числа. Осталось 3 места — успейте записаться на странице «Услуги».',
-    tag: 'Анонс',
-  },
-  {
-    date: 'Вчера',
-    title: 'Запись урока «Времена в китайском» доступна',
-    text: 'Ученики курса HSK 2 могут пересмотреть разбор в личном кабинете.',
-    tag: 'Материалы',
-  },
-  {
-    date: '3 дня назад',
-    title: 'Анна вернулась из Шанхая',
-    text: 'Привезла свежие материалы по живой разговорной речи и новые темы для занятий.',
-    tag: 'Новость',
-  },
-];
+interface Props {
+  content: SiteContent;
+  setContent: (c: SiteContent) => void;
+  editMode: boolean;
+}
 
-const schedule = [
-  { day: 'Пн', date: '30', time: '10:00', subject: 'Английский · Разговорный', free: false },
-  { day: 'Вт', date: '01', time: '14:00', subject: 'Китайский · HSK 2', free: false },
-  { day: 'Ср', date: '02', time: '12:00', subject: 'Свободно для записи', free: true },
-  { day: 'Чт', date: '03', time: '18:00', subject: 'Английский · Бизнес', free: false },
-  { day: 'Пт', date: '04', time: '11:00', subject: 'Свободно для записи', free: true },
-];
+const Home = ({ content, setContent, editMode }: Props) => {
+  const { home } = content;
 
-const Home = () => {
   return (
     <div className="animate-fade-in pb-4">
-      <div className="bg-gradient-to-br from-primary via-primary to-accent/80 text-primary-foreground rounded-[1.75rem] p-7 mb-7 relative overflow-hidden soft-shadow">
-        <div className="absolute -right-10 -top-10 w-44 h-44 rounded-full bg-white/10 blur-xl" />
-        <div className="absolute -left-6 -bottom-12 w-32 h-32 rounded-full bg-accent/30 blur-2xl" />
-        <p className="text-xs uppercase tracking-widest opacity-70 mb-2">Добро пожаловать обратно</p>
-        <h2 className="font-display text-2xl md:text-3xl font-bold leading-tight relative">
-          Ваш путь к свободному языку
-        </h2>
-        <p className="opacity-80 mt-3 text-sm relative">
-          Следите за новостями и не пропускайте важные обновления.
-        </p>
+
+      {/* Hero */}
+      <div className="relative rounded-[1.75rem] p-7 mb-7 overflow-hidden soft-shadow">
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-card to-card/80" />
+        <div className="absolute -right-12 -top-12 w-52 h-52 rounded-full bg-accent/10 blur-3xl" />
+        <div className="absolute -left-8 -bottom-14 w-36 h-36 rounded-full bg-purple-500/10 blur-2xl" />
+        <div className="relative">
+          <p className="text-xs uppercase tracking-widest text-accent font-bold mb-3">
+            Добро пожаловать обратно
+          </p>
+          <h2 className="font-display text-2xl md:text-3xl font-bold leading-tight text-gradient">
+            <EditableText
+              value={home.heroTitle}
+              onChange={(v) => setContent({ ...content, home: { ...home, heroTitle: v } })}
+              editMode={editMode}
+            />
+          </h2>
+          <EditableText
+            value={home.heroSubtitle}
+            onChange={(v) => setContent({ ...content, home: { ...home, heroSubtitle: v } })}
+            editMode={editMode}
+            className="text-muted-foreground mt-3 text-sm leading-relaxed block"
+            tag="p"
+          />
+        </div>
       </div>
 
+      {/* Расписание */}
       <div className="mb-7">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-display text-2xl font-bold text-foreground">Расписание уроков</h3>
-          <Icon name="CalendarDays" size={20} className="text-accent" />
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-display text-xl font-bold text-foreground">Расписание</h3>
+          <div className="flex items-center gap-1.5 text-accent text-xs font-semibold">
+            <Icon name="CalendarDays" size={15} />
+            Эта неделя
+          </div>
         </div>
         <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 stagger">
-          {schedule.map((s, i) => (
+          {home.schedule.map((s, i) => (
             <div
               key={i}
-              className={`min-w-[140px] rounded-2xl p-4 border hover-lift ${
+              className={`min-w-[138px] rounded-2xl p-4 border hover-lift shrink-0 ${
                 s.free
-                  ? 'border-dashed border-accent/50 bg-accent/5'
-                  : 'border-border bg-card/70 backdrop-blur-sm'
+                  ? 'border-dashed border-accent/40 bg-accent/5'
+                  : 'glass-light border-white/6'
               }`}
             >
-              <div className="flex items-baseline gap-2">
+              <div className="flex items-baseline gap-1.5 mb-2">
                 <span className="font-display text-2xl font-bold text-foreground">{s.date}</span>
-                <span className="text-xs text-muted-foreground uppercase">{s.day}</span>
+                <span className="text-[11px] text-muted-foreground uppercase font-semibold">{s.day}</span>
               </div>
-              <p className="text-accent font-semibold text-sm mt-2">{s.time}</p>
-              <p className="text-xs text-muted-foreground mt-1 leading-snug">{s.subject}</p>
+              <p className={`text-sm font-bold mb-1 ${s.free ? 'text-accent glow-text' : 'text-accent'}`}>{s.time}</p>
+              <p className="text-xs text-muted-foreground leading-snug">{s.subject}</p>
+              {s.free && (
+                <span className="mt-2 inline-block text-[10px] font-bold text-accent bg-accent/10 px-2 py-0.5 rounded-full">
+                  Записаться
+                </span>
+              )}
             </div>
           ))}
         </div>
       </div>
 
+      {/* Новости */}
       <div>
-        <h3 className="font-display text-2xl font-bold text-foreground mb-3">Новости</h3>
+        <h3 className="font-display text-xl font-bold text-foreground mb-4">Новости</h3>
         <div className="space-y-3 stagger">
-          {news.map((n, i) => (
+          {home.news.map((n, i) => (
             <article
               key={i}
-              className="bg-card/70 backdrop-blur-sm border border-border rounded-2xl p-5 hover-lift"
+              className="glass-light border border-white/6 rounded-2xl p-5 hover-lift"
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-accent uppercase tracking-wide bg-accent/10 px-2 py-0.5 rounded-full">
-                  {n.tag}
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold text-accent uppercase tracking-wider bg-accent/10 px-2.5 py-1 rounded-full">
+                  <EditableText
+                    value={n.tag}
+                    onChange={(v) => {
+                      const news = home.news.map((x, j) => j === i ? { ...x, tag: v } : x);
+                      setContent({ ...content, home: { ...home, news } });
+                    }}
+                    editMode={editMode}
+                  />
                 </span>
                 <span className="text-xs text-muted-foreground">{n.date}</span>
               </div>
-              <h4 className="font-bold text-foreground text-lg leading-snug">{n.title}</h4>
-              <p className="text-muted-foreground text-sm mt-1 leading-relaxed">{n.text}</p>
+              <h4 className="font-bold text-foreground text-base leading-snug mb-1">
+                <EditableText
+                  value={n.title}
+                  onChange={(v) => {
+                    const news = home.news.map((x, j) => j === i ? { ...x, title: v } : x);
+                    setContent({ ...content, home: { ...home, news } });
+                  }}
+                  editMode={editMode}
+                />
+              </h4>
+              <EditableText
+                value={n.text}
+                onChange={(v) => {
+                  const news = home.news.map((x, j) => j === i ? { ...x, text: v } : x);
+                  setContent({ ...content, home: { ...home, news } });
+                }}
+                editMode={editMode}
+                className="text-muted-foreground text-sm leading-relaxed block"
+                tag="p"
+                multiline
+              />
             </article>
           ))}
         </div>

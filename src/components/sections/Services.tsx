@@ -1,55 +1,22 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import EditableText from '@/components/EditableText';
 import { useToast } from '@/hooks/use-toast';
+import type { SiteContent } from '@/lib/content';
 
-interface Plan {
-  id: string;
-  title: string;
-  lang: string;
-  desc: string;
-  price: number;
-  unit: string;
-  popular?: boolean;
-  features: string[];
+interface Props {
+  content: SiteContent;
+  setContent: (c: SiteContent) => void;
+  editMode: boolean;
 }
 
-const plans: Plan[] = [
-  {
-    id: 'trial',
-    title: 'Пробный урок',
-    lang: 'Английский / Китайский',
-    desc: 'Знакомство, оценка уровня и план обучения',
-    price: 500,
-    unit: 'за урок',
-    features: ['Индивидуально', '45 минут', 'План на будущее'],
-  },
-  {
-    id: 'single',
-    title: 'Разовое занятие',
-    lang: 'Английский / Китайский',
-    desc: 'Один урок с полной подготовкой и материалами',
-    price: 1800,
-    unit: 'за урок',
-    popular: true,
-    features: ['Индивидуально', '60 минут', 'Домашнее задание', 'Материалы'],
-  },
-  {
-    id: 'pack',
-    title: 'Пакет 8 уроков',
-    lang: 'Английский / Китайский',
-    desc: 'Системный курс с заметным прогрессом',
-    price: 12800,
-    unit: 'за месяц',
-    features: ['8 уроков', 'Поддержка в чате', 'Гибкое расписание', 'Запись уроков'],
-  },
-];
-
-const Services = () => {
+const Services = ({ content, setContent, editMode }: Props) => {
   const { toast } = useToast();
   const [loading, setLoading] = useState<string | null>(null);
+  const { services } = content;
 
-  const handleBuy = (plan: Plan) => {
+  const handleBuy = (plan: typeof services.plans[0]) => {
     setLoading(plan.id);
     setTimeout(() => {
       setLoading(null);
@@ -60,53 +27,85 @@ const Services = () => {
     }, 700);
   };
 
+  const setPlan = (i: number, key: string, val: string | number) => {
+    const plans = services.plans.map((p, j) => j === i ? { ...p, [key]: val } : p);
+    setContent({ ...content, services: { ...services, plans } });
+  };
+
   return (
     <div className="animate-fade-in pb-4">
-      <h2 className="font-display text-3xl font-bold text-foreground mb-1">Услуги</h2>
-      <p className="text-muted-foreground text-sm mb-6">
-        Выберите формат занятий и оплатите в пару нажатий
-      </p>
+      <div className="mb-6">
+        <h2 className="font-display text-2xl font-bold text-gradient mb-1">
+          <EditableText
+            value={services.title}
+            onChange={(v) => setContent({ ...content, services: { ...services, title: v } })}
+            editMode={editMode}
+          />
+        </h2>
+        <EditableText
+          value={services.subtitle}
+          onChange={(v) => setContent({ ...content, services: { ...services, subtitle: v } })}
+          editMode={editMode}
+          className="text-muted-foreground text-sm block"
+          tag="p"
+        />
+      </div>
 
       <div className="space-y-4 stagger">
-        {plans.map((plan) => (
+        {services.plans.map((plan, i) => (
           <div
             key={plan.id}
             className={`relative rounded-[1.5rem] p-6 border hover-lift ${
               plan.popular
-                ? 'border-accent/60 bg-gradient-to-br from-accent/10 to-transparent soft-shadow'
-                : 'border-border bg-card/70 backdrop-blur-sm'
+                ? 'border-accent/40 bg-gradient-to-br from-accent/8 to-transparent glow'
+                : 'glass-light border-white/6'
             }`}
           >
             {plan.popular && (
-              <span className="absolute -top-3 left-6 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+              <span className="absolute -top-3 left-6 bg-accent text-accent-foreground text-[11px] font-bold px-3 py-1 rounded-full shadow-lg">
                 Популярный выбор
               </span>
             )}
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <p className="text-xs text-accent font-semibold uppercase tracking-wide">
-                  {plan.lang}
-                </p>
-                <h3 className="font-display text-2xl font-bold text-foreground mt-1">
-                  {plan.title}
+
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div className="flex-1 min-w-0">
+                <EditableText
+                  value={plan.lang}
+                  onChange={(v) => setPlan(i, 'lang', v)}
+                  editMode={editMode}
+                  className="text-[11px] text-accent font-bold uppercase tracking-wider block mb-1"
+                  tag="p"
+                />
+                <h3 className="font-display text-xl font-bold text-foreground">
+                  <EditableText
+                    value={plan.title}
+                    onChange={(v) => setPlan(i, 'title', v)}
+                    editMode={editMode}
+                  />
                 </h3>
-                <p className="text-muted-foreground text-sm mt-1">{plan.desc}</p>
+                <EditableText
+                  value={plan.desc}
+                  onChange={(v) => setPlan(i, 'desc', v)}
+                  editMode={editMode}
+                  className="text-muted-foreground text-sm mt-1 block"
+                  tag="p"
+                />
               </div>
               <div className="text-right shrink-0">
-                <p className="font-display text-3xl font-bold text-foreground">
+                <p className="font-display text-3xl font-bold text-gradient-warm">
                   {plan.price.toLocaleString('ru-RU')} ₽
                 </p>
-                <p className="text-xs text-muted-foreground">{plan.unit}</p>
+                <p className="text-[11px] text-muted-foreground">{plan.unit}</p>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-2 mt-4">
-              {plan.features.map((f) => (
+            <div className="flex flex-wrap gap-2 mb-5">
+              {plan.features.map((f, fi) => (
                 <span
-                  key={f}
-                  className="inline-flex items-center gap-1.5 text-xs text-muted-foreground bg-muted px-2.5 py-1 rounded-full"
+                  key={fi}
+                  className="inline-flex items-center gap-1.5 text-xs text-muted-foreground bg-white/5 border border-white/8 px-2.5 py-1 rounded-full"
                 >
-                  <Icon name="Check" size={12} className="text-accent" />
+                  <Icon name="Check" size={11} className="text-accent" />
                   {f}
                 </span>
               ))}
@@ -115,17 +114,17 @@ const Services = () => {
             <Button
               onClick={() => handleBuy(plan)}
               disabled={loading === plan.id}
-              className={`w-full h-12 rounded-xl mt-5 text-base ${
+              className={`w-full h-11 rounded-xl text-sm font-bold transition-all duration-300 ${
                 plan.popular
-                  ? 'bg-accent text-accent-foreground hover:bg-accent/90'
-                  : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                  ? 'bg-accent text-accent-foreground hover:bg-accent/90 glow hover:scale-[1.02]'
+                  : 'glass-light text-foreground hover:bg-white/10 border border-white/10'
               }`}
             >
               {loading === plan.id ? (
-                <Icon name="Loader2" size={18} className="animate-spin" />
+                <Icon name="Loader2" size={17} className="animate-spin" />
               ) : (
                 <>
-                  <Icon name="CreditCard" size={18} />
+                  <Icon name="CreditCard" size={17} />
                   Купить занятие
                 </>
               )}

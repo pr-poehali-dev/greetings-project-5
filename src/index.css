@@ -4,89 +4,66 @@
 
 @layer base {
   :root {
-    --background: 40 30% 98%;
-    --foreground: 215 35% 14%;
+    --background: 230 18% 7%;
+    --foreground: 220 20% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 215 35% 14%;
+    --card: 230 16% 10%;
+    --card-foreground: 220 20% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 215 35% 14%;
+    --popover: 230 16% 10%;
+    --popover-foreground: 220 20% 95%;
 
-    --primary: 215 45% 18%;
-    --primary-foreground: 40 30% 98%;
+    --primary: 220 20% 95%;
+    --primary-foreground: 230 18% 7%;
 
-    --secondary: 38 32% 92%;
-    --secondary-foreground: 215 45% 18%;
+    --secondary: 230 14% 15%;
+    --secondary-foreground: 220 20% 90%;
 
-    --muted: 40 20% 94%;
-    --muted-foreground: 215 16% 45%;
+    --muted: 230 14% 15%;
+    --muted-foreground: 230 10% 55%;
 
-    --accent: 30 45% 52%;
-    --accent-foreground: 40 30% 98%;
+    --accent: 165 80% 48%;
+    --accent-foreground: 230 18% 7%;
 
     --destructive: 0 72% 51%;
-    --destructive-foreground: 40 30% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 38 22% 88%;
-    --input: 38 22% 88%;
-    --ring: 30 45% 52%;
+    --border: 230 14% 16%;
+    --input: 230 14% 16%;
+    --ring: 165 80% 48%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 230 18% 7%;
+    --sidebar-foreground: 220 20% 95%;
+    --sidebar-primary: 165 80% 48%;
+    --sidebar-primary-foreground: 230 18% 7%;
+    --sidebar-accent: 230 14% 15%;
+    --sidebar-accent-foreground: 220 20% 95%;
+    --sidebar-border: 230 14% 16%;
+    --sidebar-ring: 165 80% 48%;
   }
 
   .dark {
-    --background: 215 40% 9%;
-    --foreground: 40 25% 95%;
-
-    --card: 215 38% 12%;
-    --card-foreground: 40 25% 95%;
-
-    --popover: 215 38% 12%;
-    --popover-foreground: 40 25% 95%;
-
-    --primary: 40 25% 95%;
-    --primary-foreground: 215 45% 14%;
-
-    --secondary: 215 30% 18%;
-    --secondary-foreground: 40 25% 95%;
-
-    --muted: 215 28% 18%;
-    --muted-foreground: 40 12% 65%;
-
-    --accent: 30 50% 56%;
-    --accent-foreground: 215 45% 12%;
-
+    --background: 230 18% 7%;
+    --foreground: 220 20% 95%;
+    --card: 230 16% 10%;
+    --card-foreground: 220 20% 95%;
+    --popover: 230 16% 10%;
+    --popover-foreground: 220 20% 95%;
+    --primary: 220 20% 95%;
+    --primary-foreground: 230 18% 7%;
+    --secondary: 230 14% 15%;
+    --secondary-foreground: 220 20% 90%;
+    --muted: 230 14% 15%;
+    --muted-foreground: 230 10% 55%;
+    --accent: 165 80% 48%;
+    --accent-foreground: 230 18% 7%;
     --destructive: 0 62.8% 40.6%;
-    --destructive-foreground: 40 25% 95%;
-
-    --border: 215 28% 20%;
-    --input: 215 28% 20%;
-    --ring: 30 50% 56%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 230 14% 16%;
+    --input: 230 14% 16%;
+    --ring: 165 80% 48%;
   }
 }
 
@@ -107,13 +84,13 @@
   h3,
   .font-display {
     font-family: "Unbounded", sans-serif;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 }
 
 @layer utilities {
   .animate-fade-in {
-    animation: fade-in 0.5s ease-out forwards;
+    animation: fade-in 0.45s ease-out forwards;
   }
   .animate-slide-up {
     animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -129,13 +106,14 @@
   @keyframes slide-up {
     from {
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(22px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
+
   .hover-lift {
     transition:
       transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
@@ -143,28 +121,48 @@
   }
   .hover-lift:hover {
     transform: translateY(-4px);
-    box-shadow: 0 18px 40px -18px hsl(var(--primary) / 0.25);
+    box-shadow: 0 20px 44px -18px hsl(165 80% 48% / 0.2);
   }
 
   .glass {
-    background: hsl(var(--card) / 0.7);
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
-    border: 1px solid hsl(var(--border) / 0.6);
+    background: hsl(var(--card) / 0.6);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid hsl(var(--border) / 0.7);
+  }
+
+  .glass-light {
+    background: hsl(220 20% 95% / 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(220 20% 95% / 0.08);
+  }
+
+  .glow {
+    box-shadow:
+      0 0 0 1px hsl(165 80% 48% / 0.3),
+      0 0 24px hsl(165 80% 48% / 0.15);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 28px hsl(165 80% 48% / 0.5);
   }
 
   .soft-shadow {
     box-shadow:
-      0 1px 2px hsl(var(--primary) / 0.04),
-      0 8px 24px -12px hsl(var(--primary) / 0.12);
+      0 2px 4px hsl(0 0% 0% / 0.2),
+      0 12px 32px -8px hsl(0 0% 0% / 0.3);
   }
 
   .text-gradient {
-    background: linear-gradient(
-      120deg,
-      hsl(var(--foreground)),
-      hsl(var(--accent))
-    );
+    background: linear-gradient(130deg, hsl(220 20% 95%) 30%, hsl(165 80% 58%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-warm {
+    background: linear-gradient(130deg, hsl(220 20% 95%), hsl(165 80% 48%));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -173,33 +171,22 @@
   .mesh-bg {
     background-color: hsl(var(--background));
     background-image:
-      radial-gradient(
-        at 12% 18%,
-        hsl(var(--accent) / 0.12) 0px,
-        transparent 50%
-      ),
-      radial-gradient(
-        at 88% 8%,
-        hsl(var(--primary) / 0.1) 0px,
-        transparent 45%
-      ),
-      radial-gradient(
-        at 75% 92%,
-        hsl(var(--accent) / 0.08) 0px,
-        transparent 50%
-      );
+      radial-gradient(at 10% 15%, hsl(165 80% 48% / 0.08) 0px, transparent 55%),
+      radial-gradient(at 90% 5%, hsl(240 60% 60% / 0.07) 0px, transparent 45%),
+      radial-gradient(at 60% 90%, hsl(165 70% 40% / 0.06) 0px, transparent 50%),
+      radial-gradient(at 30% 75%, hsl(260 50% 50% / 0.05) 0px, transparent 40%);
   }
 
   .animate-float {
-    animation: float 6s ease-in-out infinite;
+    animation: float 7s ease-in-out infinite;
   }
   @keyframes float {
     0%,
     100% {
-      transform: translateY(0);
+      transform: translateY(0px);
     }
     50% {
-      transform: translateY(-12px);
+      transform: translateY(-10px);
     }
   }
 
@@ -208,18 +195,41 @@
     animation: slide-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .stagger > *:nth-child(1) {
-    animation-delay: 0.05s;
+    animation-delay: 0.04s;
   }
   .stagger > *:nth-child(2) {
-    animation-delay: 0.12s;
+    animation-delay: 0.1s;
   }
   .stagger > *:nth-child(3) {
-    animation-delay: 0.19s;
+    animation-delay: 0.16s;
   }
   .stagger > *:nth-child(4) {
-    animation-delay: 0.26s;
+    animation-delay: 0.22s;
   }
   .stagger > *:nth-child(5) {
-    animation-delay: 0.33s;
+    animation-delay: 0.28s;
+  }
+
+  /* Редактируемый текст */
+  .editable {
+    position: relative;
+    transition:
+      background 0.2s,
+      outline 0.2s;
+    border-radius: 6px;
+    outline: 2px solid transparent;
+    cursor: text;
+  }
+  .editable:hover {
+    background: hsl(165 80% 48% / 0.07);
+    outline: 2px dashed hsl(165 80% 48% / 0.5);
+  }
+  .editable:focus {
+    background: hsl(165 80% 48% / 0.1);
+    outline: 2px solid hsl(165 80% 48% / 0.8);
+    cursor: text;
+  }
+  .edit-mode .editable {
+    outline: 1px dashed hsl(165 80% 48% / 0.3);
   }
 }

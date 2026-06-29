@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
 
 interface Msg {
@@ -44,33 +43,49 @@ const Messages = () => {
 
   return (
     <div className="animate-fade-in flex flex-col h-[calc(100vh-200px)]">
-      <div className="flex items-center gap-3 pb-4 border-b border-border">
-        <div className="w-11 h-11 rounded-full bg-accent/15 flex items-center justify-center">
-          <Icon name="User" size={20} className="text-accent" />
+      {/* Шапка чата */}
+      <div className="flex items-center gap-3 pb-4 mb-1 border-b border-white/8">
+        <div className="relative">
+          <div className="w-11 h-11 rounded-full bg-accent/15 border border-accent/25 flex items-center justify-center">
+            <Icon name="User" size={20} className="text-accent" />
+          </div>
+          <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-background" />
         </div>
         <div>
-          <h2 className="font-semibold text-foreground">Анна Соколова</h2>
-          <p className="text-xs text-green-600 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500" /> онлайн
-          </p>
+          <h2 className="font-bold text-foreground text-sm">Анна Соколова</h2>
+          <p className="text-xs text-emerald-400 font-medium">онлайн</p>
+        </div>
+        <div className="ml-auto flex gap-2">
+          <button className="w-9 h-9 rounded-xl glass-light flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
+            <Icon name="Phone" size={16} />
+          </button>
+          <button className="w-9 h-9 rounded-xl glass-light flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
+            <Icon name="MoreHorizontal" size={16} />
+          </button>
         </div>
       </div>
 
+      {/* Сообщения */}
       <div className="flex-1 overflow-y-auto py-4 space-y-3">
         {messages.map((m) => (
           <div
             key={m.id}
-            className={`flex ${m.from === 'me' ? 'justify-end' : 'justify-start'}`}
+            className={`flex items-end gap-2 animate-fade-in ${m.from === 'me' ? 'justify-end' : 'justify-start'}`}
           >
+            {m.from === 'teacher' && (
+              <div className="w-7 h-7 rounded-full bg-accent/15 border border-accent/20 flex items-center justify-center shrink-0 mb-1">
+                <Icon name="User" size={13} className="text-accent" />
+              </div>
+            )}
             <div
               className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${
                 m.from === 'me'
-                  ? 'bg-accent text-accent-foreground rounded-br-md'
-                  : 'bg-card border border-border text-foreground rounded-bl-md'
+                  ? 'bg-accent text-accent-foreground rounded-br-sm'
+                  : 'glass-light text-foreground rounded-bl-sm border border-white/6'
               }`}
             >
               <p className="text-sm leading-relaxed">{m.text}</p>
-              <p className={`text-[10px] mt-1 ${m.from === 'me' ? 'opacity-70' : 'text-muted-foreground'}`}>
+              <p className={`text-[10px] mt-1.5 ${m.from === 'me' ? 'opacity-60 text-right' : 'text-muted-foreground'}`}>
                 {m.time}
               </p>
             </div>
@@ -79,20 +94,26 @@ const Messages = () => {
         <div ref={endRef} />
       </div>
 
-      <div className="flex items-center gap-2 pt-3 border-t border-border">
-        <Input
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && send()}
-          placeholder="Написать сообщение…"
-          className="h-12 rounded-full"
-        />
+      {/* Поле ввода */}
+      <div className="flex items-center gap-2 pt-3 border-t border-white/8">
+        <div className="flex-1 flex items-center glass-light rounded-2xl border border-white/8 px-4 h-12">
+          <input
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && send()}
+            placeholder="Написать сообщение…"
+            className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
+          />
+          <button className="text-muted-foreground hover:text-accent transition-colors ml-2">
+            <Icon name="Paperclip" size={16} />
+          </button>
+        </div>
         <button
           onClick={send}
-          className="w-12 h-12 shrink-0 rounded-full bg-accent text-accent-foreground flex items-center justify-center hover:bg-accent/90 transition-colors"
+          className="w-12 h-12 shrink-0 rounded-2xl bg-accent text-accent-foreground flex items-center justify-center glow hover:scale-105 transition-all duration-200"
           aria-label="Отправить"
         >
-          <Icon name="Send" size={18} />
+          <Icon name="Send" size={17} />
         </button>
       </div>
     </div>

@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
 
 export interface User {
@@ -14,9 +12,9 @@ interface AuthProps {
 }
 
 const providers = [
-  { id: 'google', label: 'Войти через Google', icon: 'Chrome', color: 'bg-white text-foreground border border-border hover:bg-muted' },
-  { id: 'facebook', label: 'Войти через Facebook', icon: 'Facebook', color: 'bg-[#1877F2] text-white hover:bg-[#1877F2]/90' },
-  { id: 'apple', label: 'Войти через Apple', icon: 'Apple', color: 'bg-foreground text-background hover:bg-foreground/90' },
+  { id: 'google', label: 'Google', icon: 'Chrome' },
+  { id: 'facebook', label: 'Facebook', icon: 'Facebook' },
+  { id: 'apple', label: 'Apple', icon: 'Apple' },
 ];
 
 const Auth = ({ onAuth }: AuthProps) => {
@@ -34,65 +32,76 @@ const Auth = ({ onAuth }: AuthProps) => {
   };
 
   return (
-    <div className="min-h-screen mesh-bg flex items-center justify-center px-5 py-10">
-      <div className="w-full max-w-md animate-slide-up">
+    <div className="min-h-screen mesh-bg flex items-center justify-center px-5 py-10 relative overflow-hidden">
+      {/* Декор */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-accent/6 blur-3xl pointer-events-none" />
+
+      <div className="w-full max-w-sm animate-slide-up relative">
+        {/* Логотип */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-accent/60 flex items-center justify-center mx-auto mb-5 soft-shadow animate-float">
-            <Icon name="GraduationCap" size={30} className="text-accent-foreground" />
+          <div className="relative inline-flex mb-5">
+            <div className="w-16 h-16 rounded-2xl bg-accent flex items-center justify-center glow animate-float">
+              <Icon name="GraduationCap" size={30} className="text-accent-foreground" />
+            </div>
+            <div className="absolute -inset-2 rounded-3xl bg-accent/20 blur-xl -z-10" />
           </div>
-          <h1 className="font-display text-3xl font-bold text-gradient">
+          <h1 className="font-display text-2xl font-bold text-gradient mb-2">
             Добро пожаловать
           </h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-muted-foreground text-sm">
             Войдите, чтобы начать заниматься языками
           </p>
         </div>
 
-        <div className="glass rounded-3xl p-6 soft-shadow">
-          <div className="space-y-3">
+        {/* Карточка */}
+        <div className="glass rounded-[1.75rem] p-6 soft-shadow border border-white/8">
+
+          {/* Социальные кнопки */}
+          <div className="grid grid-cols-3 gap-2 mb-6">
             {providers.map((p) => (
               <button
                 key={p.id}
                 onClick={() => handleProvider(p.id)}
-                className={`w-full h-12 rounded-xl font-medium flex items-center justify-center gap-3 transition-colors ${p.color}`}
+                className="h-12 rounded-xl glass-light border border-white/8 flex flex-col items-center justify-center gap-1 hover:bg-white/10 hover:border-accent/30 transition-all group"
               >
-                <Icon name={p.icon} size={20} />
-                {p.label}
+                <Icon name={p.icon} size={18} className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                <span className="text-[10px] text-muted-foreground group-hover:text-foreground font-medium transition-colors">{p.label}</span>
               </button>
             ))}
           </div>
 
-          <div className="flex items-center gap-4 my-6">
-            <span className="flex-1 h-px bg-border" />
-            <span className="text-xs text-muted-foreground uppercase tracking-wider">или по почте</span>
-            <span className="flex-1 h-px bg-border" />
+          <div className="flex items-center gap-3 mb-6">
+            <span className="flex-1 h-px bg-white/8" />
+            <span className="text-[11px] text-muted-foreground uppercase tracking-wider font-medium">или по почте</span>
+            <span className="flex-1 h-px bg-white/8" />
           </div>
 
           <div className="space-y-3">
-            <Input
+            <input
               placeholder="Ваше имя"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="h-12 rounded-xl"
+              className="w-full h-12 rounded-xl bg-white/5 border border-white/10 px-4 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-accent/50 focus:bg-white/8 transition-all"
             />
-            <Input
+            <input
               type="email"
               placeholder="you@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="h-12 rounded-xl"
+              onKeyDown={(e) => e.key === 'Enter' && handleEmail()}
+              className="w-full h-12 rounded-xl bg-white/5 border border-white/10 px-4 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-accent/50 focus:bg-white/8 transition-all"
             />
-            <Button
+            <button
               onClick={handleEmail}
-              className="w-full h-12 rounded-xl bg-accent text-accent-foreground hover:bg-accent/90 text-base"
+              className="w-full h-12 rounded-xl bg-accent text-accent-foreground font-bold text-sm flex items-center justify-center gap-2 glow hover:scale-[1.02] transition-all duration-300"
             >
               Продолжить
-              <Icon name="ArrowRight" size={18} />
-            </Button>
+              <Icon name="ArrowRight" size={17} />
+            </button>
           </div>
         </div>
 
-        <p className="text-center text-xs text-muted-foreground mt-6 px-6">
+        <p className="text-center text-[11px] text-muted-foreground mt-5 px-4 leading-relaxed">
           Нажимая «Продолжить», вы соглашаетесь с условиями использования и политикой конфиденциальности
         </p>
       </div>
